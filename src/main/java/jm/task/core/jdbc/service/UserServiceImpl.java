@@ -5,15 +5,15 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
+    private final UserDao userDao = new UserDaoJDBCImpl(new Util());
 
     public UserServiceImpl() {
-        Util util = new Util();
-        this.userDao = new UserDaoJDBCImpl(util);
+
     }
     public void createUsersTable() throws SQLException {
         userDao.createUsersTable();
