@@ -5,6 +5,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static jm.task.core.jdbc.util.Util.getSessionFactory;
@@ -79,11 +80,8 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<User> userList = session.createQuery("FROM User").list();
-        transaction.commit();
-        session.close();
-        return userList;
+        TypedQuery<User> userList = session.createQuery("FROM User", User.class);
+        return userList.getResultList();
     }
 
     @Override
